@@ -80,7 +80,7 @@ def rotate_vertical():
 if __name__ == '__main__':
     try:
         # Run Flask app
-        app.run(host='192.168.244.170', port=5000)
+        app.run(host='******', port=5000)
 
     except KeyboardInterrupt:
         pi.stop()
