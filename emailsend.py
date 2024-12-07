@@ -4,9 +4,9 @@ from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 import threading
 
-email_sender = 'nguyenviethung03092001@gmail.com'
-email_receiver = 'tronggkhanhh28@gmail.com'
-email_password = 'whmkwzoenjsqbrep'
+email_sender = '******'
+email_receiver = '******'
+email_password = '******'
 
 def send_email(image_path):
     msg = MIMEMultipart()
