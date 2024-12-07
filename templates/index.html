@@ -1,0 +1,129 @@
+<html>
+<head>
+</head>
+<style>
+h2 {font-size:30px;
+line-height:0.5;}
+
+body {background-color: #B98678}
+button {
+	color: #3127d2;
+	background:#FFEB3B;
+	border: 3px solid #795548;
+	border-radius: 15px;
+	position: center;
+}
+</style>
+<body>
+<div style="text-align:center">
+<h1> <img style="height: 250px"src="{{ url_for('static', filename='logo.jpg') }}"></h1>
+<h2> DO AN CO DIEN TU <br><br>
+MO HINH XE ROBOT GIAM SAT TRONG NHA </h2>
+
+<h1>Pi Camera Stream</h1>
+<img src="{{ url_for('video_feed') }}" width="720" height="480">
+ <br>	
+        <button style="height: 50px; width: 100px; font-size: 20px" onclick="buzzer_on()">SIREN ON</button>
+        <button style="height: 50px; width: 100px; font-size: 20px" onclick="buzzer_off()">SIREN OFF</button>
+        <br>
+<span style="display:inline-block;padding:5px;border:3px solid #35302f; font-size: 100%;font-weight: bold;">  
+	<button style="height: 75px; width: 75px" onmousedown="forward() "onmouseup="stop()">
+	<img style="height: 55px"src="{{ url_for('static', filename='forward.jpg') }}"></button>
+	<br><br>
+	
+	<img hspace="10" style="padding-left: 5px">
+	<button style="height: 75px; width: 75px" onmousedown="left() "onmouseup="stop()">
+	<img style="height: 55px"src="{{ url_for('static', filename='left.jpg') }}"></button>
+	
+	
+	
+	<img hspace="30" style="padding-left: 10px">
+	<button style="height: 75px; width: 75px" onmousedown="right() "onmouseup="stop()">
+	<img style="height: 55px"src="{{ url_for('static', filename='right.jpg') }}"></button>
+	
+	<img hspace="10" style="padding-left: 5px">
+	<br><br>
+	<button style="height: 75px; width: 75px" onmousedown="reverse() "onmouseup="stop()">
+	<img style="height: 55px"src="{{ url_for('static', filename='reverse.jpg') }}"></button>
+		<br>
+</span>
+<span style="display:inline-block;padding:5px;border:3px solid #35302f; font-size: 100%;font-weight: bold;"> <br> 	
+	<p>CAMERA CONTROL</p>
+	<p><span id="angle_horizontal">{{ current_angle_horizontal }}</span> </p>
+	<img hspace="18" style="padding-left: 5px">
+	<button style="height: 50px; width: 60px; font-size: 30px" onclick="rotateServo('rotate_horizontal', '+20')">L</button>
+	<button style="height: 50px; width: 60px; font-size: 30px" onclick="rotateServo('rotate_horizontal', '-20')">R</button>
+	<img hspace="18" style="padding-left: 5px">
+	<br><br>
+	<p><span id="angle_vertical">{{ current_angle_vertical }}</span> </p>
+ 	<button style="height: 50px; width: 60px; font-size: 30px" onclick="rotateServo('rotate_vertical', '+10')">D</button>
+	<button style="height: 50px; width: 60px; font-size: 30px" onclick="rotateServo('rotate_vertical', '-10')">U</button>
+  <br><br>
+</span>
+    <br><br>
+
+</div>
+<br><br>
+<script>
+
+var xmlhttp;
+xmlhttp = new XMLHttpRequest();
+function forward()
+{
+	xmlhttp.open("GET","cgi-bin/forward.cgi",true);
+	xmlhttp.send();
+}
+function stop() 
+{ 
+	xmlhttp.open("GET","cgi-bin/stop.cgi",true); 
+	xmlhttp.send(); 
+} 
+function left() 
+{ 
+	xmlhttp.open("GET","cgi-bin/left.cgi",true); 
+	xmlhttp.send(); 
+} 
+function right()
+{ 
+	xmlhttp.open("GET","cgi-bin/right.cgi",true); 
+	xmlhttp.send(); 
+} 
+function reverse()
+{ 
+	xmlhttp.open("GET","cgi-bin/reverse.cgi",true); 
+	xmlhttp.send(); 
+}
+function buzzer_off()
+{ 
+	xmlhttp.open("GET","cgi-bin/buzzer_off.cgi",true); 
+	xmlhttp.send(); 
+}
+
+function buzzer_on()
+{ 
+	xmlhttp.open("GET","cgi-bin/buzzer_on.cgi",true); 
+	xmlhttp.send(); 
+}
+function rotateServo(endpoint, angle) {
+            fetch('/' + endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'angle=' + angle,
+            })
+            .then(response => response.text())
+            .then(data => {
+                if (endpoint === 'rotate_horizontal') {
+                    document.getElementById('angle_horizontal').textContent = data.split(':')[1].trim();
+                } else if (endpoint === 'rotate_vertical') {
+                    document.getElementById('angle_vertical').textContent = data.split(':')[1].trim();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+</script>
+</body>
+</html>
