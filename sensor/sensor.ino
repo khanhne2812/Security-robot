@@ -3,12 +3,12 @@
 #include "DHT.h"
 
 // Firebase configuration
-#define FIREBASE_HOST "fir-datn-b87a9-default-rtdb.firebaseio.com"
-#define FIREBASE_AUTH "UcyJxIB9WPKX9cTiM7odTf2NW28nqelWkxYiQETp"
+#define FIREBASE_HOST "************"
+#define FIREBASE_AUTH "************"
 
 // WiFi configuration
-#define WIFI_SSID "K"
-#define WIFI_PASSWORD "hongchodau"
+#define WIFI_SSID "******"
+#define WIFI_PASSWORD "******"
 
 // DHT sensor configuration
 #define DHTPIN 5
